@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">BASE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="" th:href="@{/css/mystyle.css}">
+</head>
+<body>
+<!--    navbar    -->
+<!--<h1>BASE.HTML HEADER</h1>-->
+<div>
+    <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Smart Contact Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <!--    start            -->
+                <li class="nav-item d-flex align-items-center mr-3"
+                    th:if="${user != null}">
+                    <img src="images/user.avif" alt="images/user.avif" th:src="@{/images/user.avif}"
+                         th:alt="@{/images/user.avif}" style="width:40px;"
+                         class="rounded-pill mr-2">
+                    <span class="navbar-text text-white" th:value="${user.name}"></span>
+                </li>
+                <!--  end              -->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/home}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/signup}">Sign Up</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/loginpage}">Log In</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/dologout}">Log Out</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+<div th:replace="${content}"></div>
+<!--<H1>FOOTER.HTML FOOTER</H1>-->
+<div  th:replace="footer :: footer"></div>
+<!--footer-->
+</body>
+
+<script src="" th:src="@{/js/myscript.js}"></script>
+</html>

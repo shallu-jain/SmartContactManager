@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Signup</title>
+</head>
+<body>
+<section>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="my-card mt-3 ">
+<!--                    mb-5 i added-->
+
+                    <!--                    <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">-->
+                    <!--                        <p th:text="${session.message.content}"></p>-->
+                    <!--                    &lt;!&ndash; <th:block th:text="${#session.removeAttribute('message')}"></th:block>&ndash;&gt;-->
+                    <!--                    </div>-->
+
+                    <div th:if="${message}" th:classappend="${message.type}" class="alert" role="alert">
+                        <p th:text="${message.content}"></p>
+                        <!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block>-->
+                    </div>
+
+                    <div class="container text-center">
+                        <img width="100px" src="" alt="" th:src="@{/images/register.avif}">
+                    </div>
+
+                    <h1 class="text-center">Register here</h1>
+                    <form novalidate method="post" th:action="@{/do_register}" th:object="${user}">
+
+                        <div class="form-group">
+                            <label for="nameInput">Your Name</label>
+                            <input type="text" name="name" class="form-control" id="nameInput" th:value="${user.name}"
+                                   th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+                                   placeholder="Enter Name here" required>
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailInput">Email address</label>
+                            <input name="email" type="email" class="form-control" id="emailInput"
+                                   th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+                                   th:value="${user.email}"
+                                   placeholder="Enter email" required>
+                            <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="passwordInput">Password</label>
+                            <input name="password" type="password" class="form-control" id="passwordInput"
+                                   th:classappend="${#fields.hasErrors('password') ? 'is-invalid':''}"
+                                   placeholder="Enter Password">
+                            <div class="invalid-feedback" th:each="e: ${#fields.errors('password')}"
+                                 th:text="${e}"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="roleInput">Role</label>
+                            <input name="role" type="text" class="form-control" id="roleInput" placeholder="Enter Role"
+                                   th:value="${user.role}">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="about" id="aboutInput" rows="5" class="form-control"
+                                      th:text="${user.about}" placeholder="Enter Something About Yourself"></textarea>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" name="agreement" id="agreementInput" class="form-check-input"
+                            >
+                            <label for="agreementInput">Accept Terms & Conditions</label>
+                        </div>
+
+                        <div class="container text-center">
+                            <button type="submit" class="btn bg-primary text-white">Submit</button>
+                            <button type="reset" class="btn bg-primary text-white">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

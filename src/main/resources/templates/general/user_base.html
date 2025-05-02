@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">BASE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="" th:href="@{/css/mystyle.css}">
+</head>
+<!--<body>-->
+<body class="d-flex flex-column min-vh-100">
+<div>
+    <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Smart Contact Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/home}">Home</a>
+                </li>
+
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="#" th:href="@{/loginpage}">Log In</a>-->
+                <!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><span th:text="${user.name}"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dologout}" href="#">Log Out</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+<!--<div th:replace="${content}"></div>-->
+
+<div class="sidebar mt-3">
+
+    <!--    <span onclick="toggleSideBar()" class="crossBtn">&times;</span>-->
+
+    <a href="#" th:href="@{/user/dashboard}" class="item"> <i class="fa-solid fa-house"></i> Home</a>
+    <a href="#" th:href="@{/user/}" class="item"><i class="fa-solid fa-users-viewfinder"></i> View Contacts</a>
+    <a href="#" th:href="@{/user/addcontact}" class="item"><i class="fa-solid fa-user-plus"></i> Add Contact</a>
+    <a href="#" th:href="@{/user/}" class="item"><i class="fa-solid fa-user"></i> Your Profile</a>
+    <a href="#" th:href="@{/user/}" class="item"><i class="fa-solid fa-gear"></i> Settings</a>
+    <a href="#" th:href="@{/dologout}" class="item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a>
+    <div class="divider"></div>
+</div>
+
+<div class="content mt-3">
+    <i onclick="toggleSideBar()" class="fas fa-bars m-3"></i>
+
+    <!--  in video here the message code is written  -->
+   <!-- <div th:if="${session.message}" class="container">
+        <div th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert">
+            <span th:text="${session.message.content}"></span>
+        </div>
+        &lt;!&ndash;        after displaying the message, we have to remove it..&ndash;&gt;
+        <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+    </div>-->
+    <div th:if="${message}" class="container">
+        <div th:classappend="${'alert-'+message.type}" class="alert text-center" role="alert">
+            <span th:text="${message.content}"></span>
+        </div>
+    </div>
+    <div th:replace="${content}"></div>
+</div>
+
+<div th:replace="footer :: footer"></div>
+</body>
+
+<script src="" th:src="@{/js/myscript.js}"></script>
+</html>
