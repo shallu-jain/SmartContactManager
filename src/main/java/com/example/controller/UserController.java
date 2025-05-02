@@ -72,6 +72,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", new Message("Contact Saved Successfully", "success"));
             model.addAttribute("contact", new Contact());
             System.out.println("NO ERROR");
+            System.out.println("New chsange");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("some exception occurred");
