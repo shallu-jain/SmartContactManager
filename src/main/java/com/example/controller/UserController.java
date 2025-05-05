@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dao.ContactRepository;
 import com.example.dao.UserRepository;
 import com.example.entities.Contact;
 import com.example.entities.User;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -23,6 +25,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ContactRepository contactRepository;
 
     // adding common method to get the user
     @ModelAttribute
@@ -72,7 +77,6 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", new Message("Contact Saved Successfully", "success"));
             model.addAttribute("contact", new Contact());
             System.out.println("NO ERROR");
-            System.out.println("New chsange");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("some exception occurred");
@@ -82,5 +86,17 @@ public class UserController {
         }
         //return "general/add_contact";
         return "redirect:/user/addcontact";
+    }
+
+    // method for view_contact 5/5/2025
+    @RequestMapping(value = "/view_contact")
+    public String viewContacts(Model model, Principal principal) {
+        System.out.println("In UserController.java -> viewContacts()");
+        model.addAttribute("title", "Show Contacts");
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
+        List<Contact> contacts = this.contactRepository.findContactByUser(user.getId());
+        model.addAttribute("listOfContacts", contacts);
+        return "general/view_contact";
     }
 }
