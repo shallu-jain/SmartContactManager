@@ -8,10 +8,14 @@ import com.example.helper.Message;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -89,14 +93,19 @@ public class UserController {
     }
 
     // method for view_contact 5/5/2025
-    @RequestMapping(value = "/view_contact")
-    public String viewContacts(Model model, Principal principal) {
+    @RequestMapping(value = "/view_contact/{page}")
+    public String viewContacts(@PathVariable("page") Integer page, Model model, Principal principal) {
         System.out.println("In UserController.java -> viewContacts()");
         model.addAttribute("title", "Show Contacts");
         String userName = principal.getName();
         User user = this.userRepository.getUserByUserName(userName);
-        List<Contact> contacts = this.contactRepository.findContactByUser(user.getId());
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<Contact> contacts = this.contactRepository.findContactByUser(user.getId(), pageable);
         model.addAttribute("listOfContacts", contacts);
+
+        // current page
+        model.addAttribute("currentPage",page);
+        model.addAttribute("totalPages",contacts.getTotalPages());
         return "general/view_contact";
     }
 }

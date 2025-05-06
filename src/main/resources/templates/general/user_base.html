@@ -26,7 +26,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/home}">Home</a>
+                    <a class="nav-link" href="#" th:href="@{/user/dashboard}">Home</a>
                 </li>
 
                 <!--                <li class="nav-item">-->
@@ -50,7 +50,7 @@
     <!--    <span onclick="toggleSideBar()" class="crossBtn">&times;</span>-->
 
     <a href="#" th:href="@{/user/dashboard}" class="item"> <i class="fa-solid fa-house"></i> Home</a>
-    <a href="#" th:href="@{/user/view_contact}" class="item"><i class="fa-solid fa-users-viewfinder"></i> View Contacts</a>
+    <a href="#" th:href="@{/user/view_contact/0}" class="item"><i class="fa-solid fa-users-viewfinder"></i> View Contacts</a>
     <a href="#" th:href="@{/user/addcontact}" class="item"><i class="fa-solid fa-user-plus"></i> Add Contact</a>
     <a href="#" th:href="@{/user/}" class="item"><i class="fa-solid fa-user"></i> Your Profile</a>
     <a href="#" th:href="@{/user/}" class="item"><i class="fa-solid fa-gear"></i> Settings</a>
