@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -104,8 +105,53 @@ public class UserController {
         model.addAttribute("listOfContacts", contacts);
 
         // current page
-        model.addAttribute("currentPage",page);
-        model.addAttribute("totalPages",contacts.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", contacts.getTotalPages());
         return "general/view_contact";
+    }
+
+    // method to show particular contact detail based on ID, on contact_detail page
+    // Created on 7/5/2025
+    @RequestMapping(value = "/contact/{cId}")
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model, Principal principal) {
+        try {
+            model.addAttribute("title", "Contact Detail");
+            String name = principal.getName();
+            User user = this.userRepository.getUserByUserName(name);
+            Optional<Contact> contact = this.contactRepository.findById(cId);
+            Contact contactDetail = contact.get();
+            if (user.getId() == contactDetail.getUser().getId()) {
+                model.addAttribute("contactDetail", contactDetail);
+            }
+        } catch (Exception e) {
+            System.out.println("error-message" + e);
+        }
+        return "general/contact_detail";
+    }
+
+    // method to delete the contact, based on the ID given.
+    // Created on 7/5/2025
+    @RequestMapping(value = "/deletecontact/{contactId}")
+    public String deleteContactById(@PathVariable("contactId") Integer id, Principal principal) {
+        try {
+            String name = principal.getName();
+            User user = this.userRepository.getUserByUserName(name);
+
+            Optional<Contact> contactById = this.contactRepository.findById(id);
+            Contact contact = contactById.get();
+
+            if (user.getId() == contact.getUser().getId()) {
+                this.contactRepository.delete(contact);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return "redirect:/user/view_contact/0";
+    }
+
+    @RequestMapping(value = "/update/{contactId}")
+    public String updateContactById(@PathVariable("contactId") Integer id) {
+
+        return "redirect:/user/view_contact/0";
     }
 }

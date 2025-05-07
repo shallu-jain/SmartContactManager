@@ -22,12 +22,25 @@
                 <tbody>
                 <tr th:each="c:${listOfContacts}">
                     <th scope="row" th:text="'SCM_USER'+${c.id}">1</th>
-                    <td th:text="${c.name}">Mark</td>
-                    <td th:text="${c.phone}">7575</td>
-                    <td th:text="${c.email}">@@@@</td>
+                    <!--if we have to show image, before name we can do it here-->
                     <td>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                        <button class="btn btn-primary btn-sm">Update</button>
+                        <!--<img src="" alt="" th:src="@{'img/'+${c.image}">-->
+                        <span th:text="${c.name}"></span>
+                    </td>
+                    <td th:text="${c.phone}">7575</td>
+                    <td>
+                        <a href="" th:href="@{'/user/contact/'+${c.id}}">
+                            <span th:text="${c.email}"></span>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="" th:href="@{'/user/deletecontact/'+${c.id}}">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </a>
+                        <a href="" th:href="@{'/user/updatecontact/'+${c.id}}">
+                            <button class="btn btn-primary btn-sm">Update</button>
+                        </a>
                     </td>
                 </tr>
                 </tbody>

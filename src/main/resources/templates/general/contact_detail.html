@@ -5,6 +5,51 @@
     <title th:text="${title}">Title</title>
 </head>
 <body>
+<section>
+    <!-- <div th:if="${notfound}" th:classappend="${notfound.type}" class="alert" role="alert">
+         <p th:text="${notfound.content}"></p>
+     </div>-->
+    <div class="card" th:if="${contactDetail}">
+        <div class="card-body">
+            <div class="container text-center">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="row" th:text="'SCM_USER'+${contactDetail.id}">1</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <td th:text="${contactDetail.name}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Phone</th>
+                        <td th:text="${contactDetail.phone}">7575</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <td th:text="${contactDetail.email}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="container text-center">
+                    <a href="" th:href="@{'/user/updatecontact/'+${contactDetail.id}}">
+                        <button class="btn btn-primary btn-sm">Update</button>
+                    </a>
+                    <a href="" th:href="@{'/user/deletecontact/'+${contactDetail.id}}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </a>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 th:unless="${contactDetail}" class="text-center text-white bg-danger text-center p-3">
+        You don't have permission to view this contact.
+    </h1>
+
+</section>
 </body>
 </html>
