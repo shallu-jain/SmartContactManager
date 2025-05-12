@@ -149,9 +149,28 @@ public class UserController {
         return "redirect:/user/view_contact/0";
     }
 
-    @RequestMapping(value = "/update/{contactId}")
-    public String updateContactById(@PathVariable("contactId") Integer id) {
+    // method to update the contact, based on ID.
+    // created on 12/5/2025
+    @RequestMapping(value = "/updatecontact/{contactId}", method = RequestMethod.POST)
+    public String updateContactById(@PathVariable("contactId") Integer id, Model model) {
+        System.out.println("UserController.java -> updateContactById()");
+        model.addAttribute("title", "Update Contact");
+        // get the contact details based on ID.
+        Contact contact = this.contactRepository.findById(id).get();
+        model.addAttribute("contactData", contact);
+        return "general/update_contact";
+    }
 
-        return "redirect:/user/view_contact/0";
+    // process the UPDATED Contact data details.
+    @RequestMapping(value = "/process_update_contact_detail")
+    public String processContact(@ModelAttribute Contact contact, Model model, Principal principal) {
+        System.out.println("UserController.java -> processContact()");
+
+        // old contact details
+        Contact oldContactDetails = this.contactRepository.findById(contact.getId()).get();
+        User user = this.userRepository.getUserByUserName(principal.getName());
+        contact.setUser(user);
+        this.contactRepository.save(contact);
+        return "redirect:/updatecontact/" + contact.getId();
     }
 }

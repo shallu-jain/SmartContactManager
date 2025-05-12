@@ -38,9 +38,9 @@
                         <a href="" th:href="@{'/user/deletecontact/'+${c.id}}">
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </a>
-                        <a href="" th:href="@{'/user/updatecontact/'+${c.id}}">
+                        <form method="post" action="" th:action="@{'/user/updatecontact/'+${c.id}}" >
                             <button class="btn btn-primary btn-sm">Update</button>
-                        </a>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

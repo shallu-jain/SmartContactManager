@@ -35,9 +35,9 @@
                     </tbody>
                 </table>
                 <div class="container text-center">
-                    <a href="" th:href="@{'/user/updatecontact/'+${contactDetail.id}}">
+                    <form method="post" action="" th:action="@{'/user/updatecontact/'+${contactDetail.id}}" >
                         <button class="btn btn-primary btn-sm">Update</button>
-                    </a>
+                    </form>
                     <a href="" th:href="@{'/user/deletecontact/'+${contactDetail.id}}">
                         <button class="btn btn-danger btn-sm">Delete</button>
                     </a>
