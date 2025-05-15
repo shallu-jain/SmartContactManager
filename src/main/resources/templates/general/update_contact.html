@@ -8,14 +8,15 @@
 <section>
     <div class="card">
         <div class="card-body">
-
+            <div th:if="${message}" th:classappend="${message.type}" class="alert" role="alert">
+            </div>
             <h1 class="text-center">Update Contact</h1>
             <div class="container-fluid mt-1">
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
 
                         <form method="post" action="#" enctype="multipart/form-data"
-                              th:action="@{/user/process_update_contact_detail}">
+                              th:action="@{/user/process_update_contact_detail}" th:object="${contactData}">
                             <!--hidden id field-->
                             <input type="hidden" th:value="${contactData.id}" name="id">
                             <!--username field-->
@@ -26,10 +27,10 @@
                                     </div>
                                 </div>
                                 <input type="text" name="name" id="userName" placeholder="Enter Name here"
-                                       class="form-control" th:value="${contactData.name}">
-                                <!--th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}" required >-->
-                                <!--<div class="invalid-feedback" th:each="e : ${#fields.errors('name')}"
-                                     th:text="${e}"></div>-->
+                                       class="form-control" th:value="${contactData.name}"
+                                th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}" required >
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('name')}"
+                                     th:text="${e}"></div>
                             </div>
 
                             <!--nickname field-->
@@ -63,10 +64,10 @@
                                     </div>
                                 </div>
                                 <input type="number" name="phone" id="phone" placeholder="Enter Phone Number here"
-                                       required class="form-control" th:value="${contactData.phone}">
-                                <!--th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}">-->
-                                <!--<div class="invalid-feedback" th:each="e:${#fields.errors('phone')}"
-                                     th:text="${e}"></div>-->
+                                        class="form-control" th:value="${contactData.phone}"
+                                th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}" required>
+                                <div class="invalid-feedback" th:each="e:${#fields.errors('phone')}"
+                                     th:text="${e}"></div>
                             </div>
 
                             <!--email field-->
@@ -77,10 +78,10 @@
                                     </div>
                                 </div>
                                 <input type="email" name="email" id="email" placeholder="Enter Email here"
-                                       th:value="${contactData.email}" class="form-control">
-                                <!--th:classappend="${#fields.hasErrors('email')?'is-invalid':''}">-->
-                                <!--<div class="invalid-feedback" th:each="e:${#fields.errors('email')}"
-                                     th:text="${e}"></div>-->
+                                       th:value="${contactData.email}" class="form-control"
+                                th:classappend="${#fields.hasErrors('email')?'is-invalid':''}" required>
+                                <div class="invalid-feedback" th:each="e:${#fields.errors('email')}"
+                                     th:text="${e}"></div>
                             </div>
                             <!--description-->
                             <div class="form-group mt-3">
@@ -89,7 +90,7 @@
                             </div>
 
                             <div class="container text-center">
-                                <button class="btn btn-outline-primary">Save Contact</button>
+                                <button type="submit" class="btn btn-outline-primary">Save Contact</button>
                             </div>
                         </form>
                     </div>

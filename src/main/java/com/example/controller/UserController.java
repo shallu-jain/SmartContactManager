@@ -5,7 +5,6 @@ import com.example.dao.UserRepository;
 import com.example.entities.Contact;
 import com.example.entities.User;
 import com.example.helper.Message;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -61,7 +59,7 @@ public class UserController {
 
     @RequestMapping(value = "/process-contact", method = RequestMethod.POST)
     public String processContactForm(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult, Model model,
-                                     Principal principal, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+                                     Principal principal, RedirectAttributes redirectAttributes) {
         try {
             System.out.println("UserController -> processContactForm()");
             if (bindingResult.hasErrors()) {
@@ -77,15 +75,12 @@ public class UserController {
             User save = userRepository.save(user);
             System.out.println("User Added " + save);
 
-            //model.addAttribute("message", new Message("Contact Saved Successfully", "alert-success"));
-            // httpSession.setAttribute("message", new Message("Contact Saved Successfully", "success"));
             redirectAttributes.addFlashAttribute("message", new Message("Contact Saved Successfully", "success"));
             model.addAttribute("contact", new Contact());
             System.out.println("NO ERROR");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("some exception occurred");
-            //httpSession.setAttribute("message", new Message("Something went wrong!!!", "danger"));
             redirectAttributes.addFlashAttribute("message", new Message("Something went wrong !!!", "danger"));
             return "redirect:/user/addcontact";
         }
@@ -151,7 +146,7 @@ public class UserController {
 
     // method to update the contact, based on ID.
     // created on 12/5/2025
-    @RequestMapping(value = "/updatecontact/{contactId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/updatecontact/{contactId}", method = {RequestMethod.POST, RequestMethod.GET})
     public String updateContactById(@PathVariable("contactId") Integer id, Model model) {
         System.out.println("UserController.java -> updateContactById()");
         model.addAttribute("title", "Update Contact");
@@ -162,15 +157,24 @@ public class UserController {
     }
 
     // process the UPDATED Contact data details.
-    @RequestMapping(value = "/process_update_contact_detail")
-    public String processContact(@ModelAttribute Contact contact, Model model, Principal principal) {
+    @RequestMapping(value = "/process_update_contact_detail", method = RequestMethod.POST)
+    public String processContact(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult,
+                                 Model model, Principal principal, RedirectAttributes redirectAttributes) {
         System.out.println("UserController.java -> processContact()");
-
+        if (bindingResult.hasErrors()) {
+            System.out.println("processContact() ERROR -> " + bindingResult.toString());
+            model.addAttribute("contactData", contact);
+            // return "redirect:/user/updatecontact/" + contact.getId();
+            return "general/update_contact";
+        }
         // old contact details
         Contact oldContactDetails = this.contactRepository.findById(contact.getId()).get();
+        // used Principal, so that we can get to know who is updating the details.
+        // but here the data will be shown only for the logged-in user only.
         User user = this.userRepository.getUserByUserName(principal.getName());
         contact.setUser(user);
         this.contactRepository.save(contact);
-        return "redirect:/updatecontact/" + contact.getId();
+        redirectAttributes.addFlashAttribute("message", new Message("Contact Updated Successfully", "success"));
+        return "redirect:/user/updatecontact/" + contact.getId();
     }
 }
