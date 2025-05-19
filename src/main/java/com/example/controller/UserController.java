@@ -13,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -176,5 +173,13 @@ public class UserController {
         this.contactRepository.save(contact);
         redirectAttributes.addFlashAttribute("message", new Message("Contact Updated Successfully", "success"));
         return "redirect:/user/updatecontact/" + contact.getId();
+    }
+
+    // Profile Handler
+
+    @GetMapping("/show_profile")
+    public String showProfilePage(Model model) {
+        model.addAttribute("title", "Profile Page");
+        return "general/profile";
     }
 }

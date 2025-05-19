@@ -9,6 +9,17 @@
     <div class="card">
         <div class="card-body">
             <h1 class="text-center">Your Contacts</h1>
+
+            <!--search box, css added in mystyle.css file -->
+            <div class="search-container my-4">
+                <input onkeyup="search()" type="text" placeholder="Enter Contact Name here to Search" id="search-input"
+                       class="form-control"/>
+                <div class="search-result">
+                    <!--<h1>Search Result....</h1>-->
+                </div>
+
+            </div>
+
             <table class="table">
                 <thead>
                 <tr>
@@ -38,7 +49,7 @@
                         <a href="" th:href="@{'/user/deletecontact/'+${c.id}}">
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </a>
-                        <form method="post" action="" th:action="@{'/user/updatecontact/'+${c.id}}" >
+                        <form method="post" action="" th:action="@{'/user/updatecontact/'+${c.id}}">
                             <button class="btn btn-primary btn-sm">Update</button>
                         </form>
                     </td>

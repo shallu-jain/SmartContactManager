@@ -1,6 +1,7 @@
 package com.example.dao;
 
 import com.example.entities.Contact;
+import com.example.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
     // now we have to implement Pagination, so that's why i have changed the above method.
     @Query("from Contact as c where c.user.id =:userId")
     public Page<Contact> findContactByUser(@Param("userId") int userId, Pageable pageable);
+
+    public List<Contact> findByNameContainingAndUser(String name, User user);
 }
