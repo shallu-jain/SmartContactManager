@@ -82,3 +82,8 @@ background:#ffffff;
     border:1px solid grey;
     display:none;
 }
+/* Style for side bar links*/
+.active{
+    background:#009688 !important;
+    color:white !important;
+}

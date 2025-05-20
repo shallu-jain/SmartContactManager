@@ -49,7 +49,7 @@
                         <a href="" th:href="@{'/user/deletecontact/'+${c.id}}">
                             <button class="btn btn-danger btn-sm">Delete</button>
                         </a>
-                        <form method="post" action="" th:action="@{'/user/updatecontact/'+${c.id}}">
+                        <form class="d-inline" method="post" action="" th:action="@{'/user/updatecontact/'+${c.id}}">
                             <button class="btn btn-primary btn-sm">Update</button>
                         </form>
                     </td>
@@ -80,6 +80,12 @@
 
         </div>
     </div>
+    <script>
+        $(document).ready(() => {
+            $(".item").removeClass("active");
+            $("#view_contact-link").addClass("active");
+         });
+    </script>
 </section>
 </body>
 </html>

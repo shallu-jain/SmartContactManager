@@ -35,7 +35,8 @@
                     </tbody>
                 </table>
                 <div class="container text-center">
-                    <form method="post" action="" th:action="@{'/user/updatecontact/'+${contactDetail.id}}" >
+                    <!-- class="d-inline" -- bootstrap utility which helps to keep the button in-line or say side-by-side -->
+                    <form method="post" action="" th:action="@{'/user/updatecontact/'+${contactDetail.id}}" class="d-inline" >
                         <button class="btn btn-primary btn-sm">Update</button>
                     </form>
                     <a href="" th:href="@{'/user/deletecontact/'+${contactDetail.id}}">

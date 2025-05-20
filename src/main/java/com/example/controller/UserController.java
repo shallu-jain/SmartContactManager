@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // adding common method to get the user
     @ModelAttribute
@@ -181,5 +185,36 @@ public class UserController {
     public String showProfilePage(Model model) {
         model.addAttribute("title", "Profile Page");
         return "general/profile";
+    }
+
+    @RequestMapping("/setting")
+    public String changePasswordFromSetting(Model model) {
+        System.out.println("SettingController.java --> changePasswordFromSetting()");
+        model.addAttribute("title", "Setting Page");
+
+        return "general/settings";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,
+                                 Principal principal, RedirectAttributes redirectAttributes) {
+        System.out.println("UserController.java -> changePassword()");
+        String name = principal.getName();
+        User user = this.userRepository.getUserByUserName(name);
+        System.out.println("OLD PASSWORD : " + oldPassword);
+        System.out.println("USER PASSWORD : " + user.getPassword());
+        if (this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            // change the password
+            user.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+            this.userRepository.save(user);
+            redirectAttributes.addFlashAttribute("message", new Message("Password Changes Successfully", "success"));
+        } else {
+            // Incorrect password
+            // redirect to setting page again, to enter the old password again
+            redirectAttributes.addFlashAttribute("message", new Message("Enter the correct Old Password", "danger"));
+            return "redirect:/user/setting";
+        }
+        // redirect to dashboard page
+        return "redirect:/user/dashboard";
     }
 }
