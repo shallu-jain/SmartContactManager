@@ -42,7 +42,7 @@ public class MyConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/home").hasRole("USER") // or ADMIN based on your app logic
                         .requestMatchers("/loginpage", "/check_credential", "/", "/home", "/smartcontactmanager",
-                                "/signup", "/css/**", "/images/**","/js/**").permitAll()
+                                "/signup", "/forgot","/send_otp","/css/**", "/images/**","/js/**").permitAll()
                         .anyRequest().authenticated())
                 /*.formLogin(httpSecurityFormLoginConfigurer ->
                         httpSecurityFormLoginConfigurer

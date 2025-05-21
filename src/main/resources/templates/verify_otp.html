@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">VOTP</title>
+</head>
+<body>
+<section>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="my-card mt-5 mb-5">
+
+                    <div class="alert alert-success" role="alert">
+                        We have sent OTP to your Gmail
+                    </div>
+                    <form novalidate method="post" th:action="@{/send_otp}">
+
+                        <div class="form-group">
+                            <label for="otp">Enter OTP to verify</label>
+                            <input type="text" class="form-control" id="otp" name="otp"
+                                   placeholder="Enter OTP here" required>
+                        </div>
+
+                        <div class="container text-center">
+                            <button type="submit" class="btn bg-primary text-white">Verify OTP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
