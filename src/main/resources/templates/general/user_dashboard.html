@@ -6,11 +6,44 @@
 </head>
 <body>
 <section>
-        <div class="container">
-    <!--        <div class="row">-->
-    <h1 th:text="${title}">UserDashboardPage</h1>
-    <!--        </div>-->
+
+    <div class="card">
+        <div class="card-body">
+            <h1 th:text="${title}">UserDashboardPage</h1>
+            <br>
+            <div class="text-center">
+                <h3>Today's Contact Birthday List</h3>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Birth Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c:${birthdayContacts}">
+                    <th scope="row" th:text="'SCM_USER'+${c.id}">1</th>
+                    <td>
+                        <span th:text="${c.name}"></span>
+                    </td>
+                    <td th:text="${c.phone}">7575</td>
+                    <td>
+                        <a href="" th:href="@{'/user/contact/'+${c.id}}">
+                            <span th:text="${c.email}"></span>
+                        </a>
+                    </td>
+                    <td th:text="${c.birthDate}">01/01/2025</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
+
     <script>
         $(document).ready(() => {
             $(".item").removeClass("active");

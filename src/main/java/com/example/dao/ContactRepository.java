@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ContactRepository extends JpaRepository<Contact, Integer> {
@@ -20,4 +21,8 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
     public Page<Contact> findContactByUser(@Param("userId") int userId, Pageable pageable);
 
     public List<Contact> findByNameContainingAndUser(String name, User user);
+
+    // based on Birth Date and Month
+    @Query("SELECT c FROM Contact c WHERE c.user = :user AND FUNCTION('DAY', c.birthDate) = :day AND FUNCTION('MONTH', c.birthDate) = :month")
+    public List<Contact> findContactBirthdayToday(@Param("user") User user, @Param("day") int day, @Param("month") int month);
 }

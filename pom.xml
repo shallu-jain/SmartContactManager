@@ -83,11 +83,17 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
+        <!-- https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
         <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>jakarta.activation</artifactId>
+        </dependency>-->
     </dependencies>
 
     <build>

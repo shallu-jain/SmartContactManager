@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -33,6 +35,9 @@ public class Contact {
     @Email(message = "Enter a valid email address.e.g:test@gmail.com")
     private String email;
 //    private String image;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     @Column(length = 1000)
     private String description;

@@ -89,6 +89,20 @@
                                      th:text="${e}"></div>
                             </div>
 
+                            <!-- Birth Date field -->
+                            <div class="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <input type="date" name="birthDate" id="birthDate" placeholder="Select Date"
+                                       th:value="${contact.birthDate}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('birthDate')?'is-invalid':''}" required>
+                                <div class="invalid-feedback" th:each="e:${#fields.errors('birthDate')}"
+                                     th:text="${e}"></div>
+                            </div>
+
                             <!--image field-->
                            <!-- <div class="input-group mt-3">
                                 <div class="input-group-prepend">

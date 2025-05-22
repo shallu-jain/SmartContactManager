@@ -27,6 +27,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Birth Date</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -44,7 +45,8 @@
                             <span th:text="${c.email}"></span>
                         </a>
                     </td>
-
+                     <!--birthdate field-->
+                    <td th:text="${c.birthDate}">01/01/2025</td>
                     <td>
                         <a href="" th:href="@{'/user/deletecontact/'+${c.id}}">
                             <button class="btn btn-danger btn-sm">Delete</button>

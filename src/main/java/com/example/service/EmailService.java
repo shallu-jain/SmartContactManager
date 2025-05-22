@@ -14,7 +14,7 @@ public class EmailService {
         boolean f = false;
         try {
 
-            String from = "";
+            String from = "190303105122@paruluniversity.ac.in";
             // variable for gmail
             String host = "smtp.gmail.com";
 
@@ -22,14 +22,16 @@ public class EmailService {
             Properties properties = System.getProperties();
             System.out.println("Properties : " + properties);
             properties.put("mail.smtp.host", host);
-            properties.put("mail.smtp.port", "465");
-            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.port", "587");
+           // properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.starttls.enable","true");
+            properties.put("mail.smtp.starttls.required","true");
             properties.put("mail.smtp.auth", "true");
 
             Session session = Session.getInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("", "");
+                    return new PasswordAuthentication("190303105122@paruluniversity.ac.in", "JShallu6153@");
                 }
             });
             session.setDebug(true);

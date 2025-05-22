@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.service.EmailService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class ForgotController {
     }
 
     @PostMapping("/send_otp")
-    public String otpGenerator(@RequestParam("email") String email, Model model) {
+    public String otpGenerator(@RequestParam("email") String email, Model model, HttpSession session) {
         System.out.println("ForgotController.java -->> otpGenerator()");
         System.out.println("Email " + email);
         model.addAttribute("title", "Verify OTP..");
@@ -35,12 +36,18 @@ public class ForgotController {
 
         String subject = "OTP from SCM";
         String message = "<h1> OTP = " + otpValue + "</h1>";
-        String to = email;
-        boolean isSend = emailService.sendEmail(to, subject, message);
+        boolean isSend = emailService.sendEmail(email, subject, message);
         if (isSend) {
-            return "change_password";
-        } else {
             return "verify_otp";
+        } else {
+            session.setAttribute("message","Check your Email Id");
+            return "forgot_password";
         }
+    }
+
+    @RequestMapping(value = "/verify_entered_otp")
+    public String verifyEnteredOtp(){
+
+        return "";
     }
 }

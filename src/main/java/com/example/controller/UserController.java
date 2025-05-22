@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -43,8 +45,16 @@ public class UserController {
     }
 
     @RequestMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(Model model, Principal principal) {
         System.out.println("In UserController.java -> dashboard()");
+        String name = principal.getName();
+        User user = userRepository.getUserByUserName(name);
+        LocalDate today = LocalDate.now();
+        int date = today.getDayOfMonth();
+        int month = today.getMonthValue();
+        List<Contact> contactListByBirthDate = this.contactRepository.findContactBirthdayToday(user,date,month);
+        model.addAttribute("birthdayContacts", contactListByBirthDate);
+
         model.addAttribute("title", "User Dashboard");
         return "general/user_dashboard";
     }
